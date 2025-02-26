@@ -1,0 +1,22 @@
+#!/bin/python3
+#!/bin/python3
+import sys
+
+def count_bytes(http_request: str) -> int:
+    lines = http_request.split('\n')
+    byte_count = sum(len(line.encode('utf-8')) for line in lines)
+
+    # Add \r\n for all lines except the last one if there's no trailing newline
+    byte_count += 2 * (len(lines) - 1)
+
+    return byte_count
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python smuggly.py '<HTTP Request>'")
+        sys.exit(1)
+
+    http_request = sys.argv[1]
+    byte_count = count_bytes(http_request)
+    print(f"Total bytes: {byte_count} (0x{byte_count:X})")
+
